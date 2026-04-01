@@ -40,19 +40,19 @@ class QuizScreenViewModel: ViewModel() {
 
     val perguntas = listOf(
         Pergunta(
-            "Qual a Capital da França",
+            "Qual a Capital da França?",
             listOf("Roma", "Paris", "Londres", "Tokio"),
             "Paris"
         ),
         Pergunta(
-            "1 + 1",
-            listOf("10", "12", "2", "87"),
-            "2"
+            "Onde se localiza Machu Picchu?",
+            listOf("Peru", "Chile", "Argentina", "Colômbia"),
+            "Peru"
         ),
         Pergunta(
-            "10 + 10",
-            listOf("20", "35", "70", "1010"),
-            "20"
+            "Qual planeta é conhecido como planeta vermelho?",
+            listOf("Júpiter", "Vênus", "Marte", "Mercurio"),
+            "Marte"
         )
     )
 
