@@ -16,6 +16,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,10 +25,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.quiz.R
+import com.example.quiz.screens.quizScreen.QuizScreenViewModel
 
 @Composable
-fun resultScreen() {
+fun resultScreen(
+    navController: NavController,
+
+    pontuacao: Int
+) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -77,7 +86,7 @@ fun resultScreen() {
                     )
                 }
                 Text(
-                    text = "Você acertou 0 de 0 perguntas",
+                    text = "Você acertou $pontuacao de 3 perguntas",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Normal
                 )
@@ -86,7 +95,9 @@ fun resultScreen() {
                 modifier = Modifier.padding(horizontal = 80.dp)
             ) {
                 Button(
-                    onClick = {},
+                    onClick = {
+                        navController.popBackStack("menu", false)
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(236, 152, 109, 255)

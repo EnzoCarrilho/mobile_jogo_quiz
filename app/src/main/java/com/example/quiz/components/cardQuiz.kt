@@ -13,18 +13,32 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.quiz.screens.quizScreen.QuizScreenViewModel
 
 @Composable
 fun cardQuiz(
-    pergunta: String,
-    alternativa1: String,
-    alternativa2: String,
-    alternativa3: String,
-    alternativa4: String
+
+    quizScreenViewModel: QuizScreenViewModel = viewModel()
 ) {
+
+//    var respostaSelecionada by remember { mutableStateOf<String?>(null) }
+//    val opcoes = listOf<String>("A", "B", "C", "D")
+//    val correta = "C"
+
+    val indice by quizScreenViewModel.indicePergunta.observeAsState(0)
+
+    val respostaSelecionada by quizScreenViewModel.respostaSelecionada.observeAsState()
+
+    val pergunta = quizScreenViewModel.perguntas[indice]
 
     Card(
         modifier = Modifier
@@ -44,61 +58,32 @@ fun cardQuiz(
                     .padding(12.dp)
             ) {
                 Text(
-                    text = pergunta
+                    text = pergunta.textoPergunta
                 )
             }
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                OutlinedButton(
-                    onClick = {
+                pergunta.opcoes.forEach { opcao ->
+                    BotaoDePergunta(
+                        value = opcao,
+                        selecionada = respostaSelecionada == opcao,
+                        correta = opcao == pergunta.respostaCorreta,
+                        resposta = respostaSelecionada,
+                        onClick = {
+                            quizScreenViewModel.selecionarResposta(opcao, pergunta.respostaCorreta)
+                        }
+                    )
 
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(4.dp)
-                ) {
-                    Text(
-                        alternativa1,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Start
-                    )
-                }
-                OutlinedButton(
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(4.dp)
-                ) {
-                    Text(
-                        alternativa2,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Start
-                        )
-                }
-                OutlinedButton(
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(4.dp)
-                ) {
-                    Text(
-                        alternativa3,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Start
-                    )
-                }
-                OutlinedButton(
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(4.dp)
-                ) {
-                    Text(
-                        alternativa4,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Start
-                    )
                 }
             }
+
         }
+
+
+
+
 
     }
 }

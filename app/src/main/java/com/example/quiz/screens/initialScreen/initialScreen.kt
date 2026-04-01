@@ -54,7 +54,9 @@ fun initialScreen(navController: NavController) {
                 )
 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        navController.navigate(route = "quiz")
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(236, 152, 109, 255)
